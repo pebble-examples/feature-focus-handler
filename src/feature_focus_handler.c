@@ -28,16 +28,18 @@ static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(s_main_window);
   GRect bounds = layer_get_frame(window_layer);
 
-  s_in_time = text_layer_create(bounds);
+  s_in_time = text_layer_create(PBL_IF_RECT_ELSE(bounds, GRect(0, 35, bounds.size.w, bounds.size.h)));
   text_layer_set_text(s_in_time, s_in_buf);
   text_layer_set_font(s_in_time, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_text_alignment(s_in_time, PBL_IF_RECT_ELSE(GTextAlignmentLeft, GTextAlignmentCenter));
   layer_add_child(window_layer, text_layer_get_layer(s_in_time));
  
   bounds.origin.y = 50;
 
-  s_out_time = text_layer_create(bounds);
+  s_out_time = text_layer_create(PBL_IF_RECT_ELSE(bounds, GRect(0, 85, bounds.size.w, bounds.size.h)));
   text_layer_set_text(s_out_time, s_out_buf);
   text_layer_set_font(s_out_time, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_text_alignment(s_out_time, PBL_IF_RECT_ELSE(GTextAlignmentLeft, GTextAlignmentCenter));
   layer_add_child(window_layer, text_layer_get_layer(s_out_time));
 
   snprintf(s_in_buf, sizeof(s_in_buf), "Last in focus:\nNever");
